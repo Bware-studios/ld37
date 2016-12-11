@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="25" height="15" tilewidth="64" tileheight="64" nextobjectid="39">
+ <tileset firstgid="1" name="tileset1" tilewidth="64" tileheight="64" tilecount="100" columns="10">
+  <image source="tiles1.png" width="640" height="640"/>
+  <tile id="0">
+   <objectgroup draworder="index">
+    <object id="1" x="0" y="0" width="64" height="64"/>
+   </objectgroup>
+  </tile>
+  <tile id="1">
+   <objectgroup draworder="index">
+    <object id="1" x="0" y="0" width="64" height="64"/>
+   </objectgroup>
+  </tile>
+  <tile id="2">
+   <objectgroup draworder="index">
+    <object id="1" x="0" y="0" width="64" height="64"/>
+   </objectgroup>
+  </tile>
+  <tile id="3">
+   <objectgroup draworder="index">
+    <object id="1" x="0" y="0" width="64" height="64"/>
+   </objectgroup>
+  </tile>
+  <tile id="4">
+   <objectgroup draworder="index">
+    <object id="1" x="0" y="0" width="64" height="64"/>
+   </objectgroup>
+  </tile>
+  <tile id="5">
+   <objectgroup draworder="index">
+    <object id="1" x="0" y="0" width="64" height="64"/>
+   </objectgroup>
+  </tile>
+  <tile id="6">
+   <objectgroup draworder="index">
+    <object id="1" x="0" y="0" width="64" height="64"/>
+   </objectgroup>
+  </tile>
+  <tile id="7">
+   <objectgroup draworder="index">
+    <object id="1" x="0" y="0" width="64" height="64"/>
+   </objectgroup>
+  </tile>
+  <tile id="8">
+   <objectgroup draworder="index">
+    <object id="1" x="0" y="0" width="64" height="64"/>
+   </objectgroup>
+  </tile>
+  <tile id="9">
+   <objectgroup draworder="index">
+    <object id="1" x="0" y="0" width="64" height="64"/>
+   </objectgroup>
+  </tile>
+  <tile id="10">
+   <objectgroup draworder="index">
+    <object id="1" x="0" y="0" width="64" height="64"/>
+   </objectgroup>
+  </tile>
+  <tile id="11">
+   <objectgroup draworder="index">
+    <object id="1" x="0" y="0" width="64" height="64"/>
+   </objectgroup>
+  </tile>
+  <tile id="15">
+   <objectgroup draworder="index">
+    <properties>
+     <property name="layer name" value="main"/>
+    </properties>
+    <object id="1" x="0" y="32" width="64" height="32"/>
+   </objectgroup>
+  </tile>
+  <tile id="21">
+   <objectgroup draworder="index">
+    <object id="1" x="0" y="16" width="64" height="48"/>
+   </objectgroup>
+  </tile>
+  <tile id="22">
+   <objectgroup draworder="index">
+    <object id="1" x="0" y="16" width="64" height="48"/>
+   </objectgroup>
+  </tile>
+  <tile id="23">
+   <objectgroup draworder="index">
+    <object id="1" x="0" y="16" width="64" height="48"/>
+   </objectgroup>
+  </tile>
+  <tile id="24">
+   <objectgroup draworder="index">
+    <object id="1" x="0" y="16" width="64" height="48"/>
+   </objectgroup>
+  </tile>
+  <tile id="25">
+   <objectgroup draworder="index">
+    <object id="1" x="0" y="16" width="64" height="48"/>
+   </objectgroup>
+  </tile>
+  <tile id="26">
+   <objectgroup draworder="index">
+    <object id="1" x="0" y="16" width="64" height="48"/>
+   </objectgroup>
+  </tile>
+ </tileset>
+ <layer name="back" width="25" height="15">
+  <data encoding="csv">
+21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,
+21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,
+21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,
+21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,
+21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,
+21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,
+21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,
+21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,
+21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,
+21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,
+21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,
+21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,
+21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,
+21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,
+21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21
+</data>
+ </layer>
+ <layer name="main" width="25" height="15">
+  <data encoding="csv">
+4,2,2,2,2,2,2,2,2,2,2,2,2,2,4,2,2,4,4,4,4,4,4,4,4,
+4,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,22,22,22,22,22,22,22,4,
+4,0,0,0,0,0,0,24,25,26,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,
+4,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,4,
+4,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,4,
+4,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,4,
+4,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,4,
+4,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,4,
+4,2,2,2,2,2,2,2,0,0,2,2,2,2,2,0,0,0,0,0,0,0,0,0,4,
+4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,
+4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,24,25,26,0,4,
+4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,
+4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,24,25,26,0,4,
+4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,
+4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4
+</data>
+ </layer>
+ <objectgroup name="objects1">
+  <object id="20" name="player" type="NoCollider" gid="93" x="413" y="396" width="64" height="64" visible="0">
+   <properties>
+    <property name="0-prefab" value="player"/>
+   </properties>
+  </object>
+  <object id="29" name="malo" gid="92" x="379" y="732" width="64" height="64" visible="0">
+   <properties>
+    <property name="0-prefab" value="malo"/>
+   </properties>
+  </object>
+  <object id="30" name="malo" gid="92" x="632" y="763" width="64" height="64" visible="0">
+   <properties>
+    <property name="0-prefab" value="malo"/>
+   </properties>
+  </object>
+  <object id="31" name="malo" gid="92" x="920" y="767" width="64" height="64" visible="0">
+   <properties>
+    <property name="0-prefab" value="malo"/>
+   </properties>
+  </object>
+  <object id="32" name="malo" gid="92" x="519" y="840" width="64" height="64" visible="0">
+   <properties>
+    <property name="0-prefab" value="malo"/>
+   </properties>
+  </object>
+  <object id="34" name="mesa" gid="23" x="474" y="358" width="64" height="64" visible="0">
+   <properties>
+    <property name="0-prefab" value="mesa1"/>
+   </properties>
+  </object>
+  <object id="35" name="mesa2" x="195" y="725" width="187" height="37" visible="0">
+   <properties>
+    <property name="0-prefab" value="mesa2"/>
+   </properties>
+  </object>
+  <object id="36" name="room" type="Trigger" x="73" y="73" width="811" height="431">
+   <properties>
+    <property name="0-prefab" value="roomshape"/>
+    <property name="0-prefab add collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="37" name="mesa" gid="23" x="614" y="339" width="64" height="64" visible="0">
+   <properties>
+    <property name="0-prefab" value="mesa1"/>
+   </properties>
+  </object>
+  <object id="38" name="mesa" gid="23" x="514" y="334" width="64" height="64" visible="0">
+   <properties>
+    <property name="0-prefab" value="mesa1"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="objects2">
+  <object id="33" name="craneo" type="NoCollider" gid="27" x="546" y="167" width="64" height="64"/>
+ </objectgroup>
+</map>
