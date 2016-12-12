@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -27,8 +28,10 @@ public class Damageable : MonoBehaviour {
 		
 			// morir
 			if (playerctl) {
-				if (!dead)
+				if (!dead) {
 					playerctl.die ();
+					waitAndExit (3);
+				}
 			} else {
 				Destroy (gameObject);
 			}
@@ -43,5 +46,11 @@ public class Damageable : MonoBehaviour {
 			score1.text = ""+life;
 		}
 	}
+
+	void waitAndExit(float seconds) {
+		//yield return new WaitForSeconds (seconds);
+		SceneManager.LoadScene ("perder");
+	}
+
 
 }

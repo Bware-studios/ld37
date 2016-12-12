@@ -2681,7 +2681,8 @@ namespace X_UniTMX
 			int c = 1;
 			while (obj.HasProperty(Property_AddComponent + c))
 			{
-				UnityEngineInternal.APIUpdaterRuntimeServices.AddComponent(gameObject, "Assets/X-UniTMX/Code/Map.cs (2684,5)", obj.GetPropertyAsString(Property_AddComponent + c));
+				//UnityEngineInternal.APIUpdaterRuntimeServices.AddComponent(gameObject, "Assets/X-UniTMX/Code/Map.cs (2684,5)", obj.GetPropertyAsString(Property_AddComponent + c));
+
 				c++;
 			}
 			c = 1;

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -14,10 +15,11 @@ public class Room : MonoBehaviour {
 
 	public void Update() {
 		//Debug.Log (inroom);
-		if (inroom == total) {
+		if (inroom == total && total>1) {
 			//Debug.Log ("todos");
 			//if (Game.thegame)
 			//	Game.thegame.win ();
+			SceneManager.LoadScene("ganar");
 		}
 		marcador.text = "in: " + inroom + "/" + total;
 		inroom = 0;
