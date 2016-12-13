@@ -9,11 +9,17 @@ public class Damageable : MonoBehaviour {
 
 	Text score1 = null;
 	Control playerctl;
+	MaloAI1 maloctl;
 	bool dead = false;
+
+	public AudioSource hurtsound;
+
 
 	// Use this for initialization
 	void Start () {
 		playerctl = GetComponent<Control> ();
+		maloctl = GetComponent<MaloAI1> ();
+
 		if (playerctl) {
 			GameObject go = GameObject.FindGameObjectWithTag ("score1");
 			score1 = go.GetComponent<Text >();
@@ -22,6 +28,8 @@ public class Damageable : MonoBehaviour {
 	}
 	
 	public void damage(float d) {
+		if (hurtsound)
+			hurtsound.Play ();
 		life -= d;
 		if (life <= 0) {
 			life = 0;
@@ -32,7 +40,9 @@ public class Damageable : MonoBehaviour {
 					playerctl.die ();
 					waitAndExit (3);
 				}
-			} else {
+			} else if (maloctl) {
+				maloctl.hit ();
+			}else {
 				Destroy (gameObject);
 			}
 			dead = true;

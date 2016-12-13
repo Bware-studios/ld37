@@ -22,7 +22,12 @@ public class Bullet : MonoBehaviour {
 
 
 	public void launch(int dx,int dy) {
-		GetComponent<Rigidbody2D>().velocity = new Vector2 (speed*dx,speed*dy);
+		float jx=0.0f, jy=0.0f;
+		if (dx == 0)
+			jx += Random.Range (-.2f, .2f) * speed;
+		if (dy == 0)
+			jy += Random.Range (-.2f, .2f) * speed;
+		GetComponent<Rigidbody2D>().velocity = new Vector2 (speed*dx+jx,speed*dy+jy);
 	}
 
 

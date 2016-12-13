@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="25" height="15" tilewidth="64" tileheight="64" nextobjectid="37">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="25" height="15" tilewidth="64" tileheight="64" nextobjectid="45">
  <tileset firstgid="1" name="tileset1" tilewidth="64" tileheight="64" tilecount="100" columns="10">
   <image source="tiles1.png" width="640" height="640"/>
   <tile id="0">
@@ -175,10 +175,40 @@
     <property name="0-prefab" value="mesa2"/>
    </properties>
   </object>
-  <object id="36" name="room" type="Trigger" x="73" y="73" width="811" height="431">
+  <object id="36" name="room" type="Trigger" x="36" y="20" width="879" height="512">
    <properties>
     <property name="0-prefab" value="roomshape"/>
     <property name="0-prefab add collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="37" name="malo" gid="92" x="1021" y="511" width="64" height="64" visible="0">
+   <properties>
+    <property name="0-prefab" value="malo"/>
+   </properties>
+  </object>
+  <object id="38" name="malo" gid="92" x="1111" y="568" width="64" height="64" visible="0">
+   <properties>
+    <property name="0-prefab" value="malo"/>
+   </properties>
+  </object>
+  <object id="39" name="malo" gid="92" x="1276" y="580" width="64" height="64" visible="0">
+   <properties>
+    <property name="0-prefab" value="malo"/>
+   </properties>
+  </object>
+  <object id="40" name="malo" gid="92" x="1049" y="220" width="64" height="64" visible="0">
+   <properties>
+    <property name="0-prefab" value="malo"/>
+   </properties>
+  </object>
+  <object id="42" name="mesa" gid="23" x="935" y="706" width="64" height="64" visible="0">
+   <properties>
+    <property name="0-prefab" value="mesa1"/>
+   </properties>
+  </object>
+  <object id="44" name="mesa" gid="23" x="1186" y="411" width="64" height="64" visible="0">
+   <properties>
+    <property name="0-prefab" value="mesa1"/>
    </properties>
   </object>
  </objectgroup>

@@ -6,8 +6,12 @@ using System.Collections;
 public class Room : MonoBehaviour {
 	public int total=0;
 	public int inroom=0;
+	int inroomantes;
 	BoxCollider2D box;
 	public Text marcador;
+
+	public AudioSource entersound;
+	public AudioSource exitsound;
 
 	public void register() {
 		total += 1;
@@ -22,12 +26,21 @@ public class Room : MonoBehaviour {
 			SceneManager.LoadScene("ganar");
 		}
 		marcador.text = "in: " + inroom + "/" + total;
+		if (inroom > inroomantes) {
+			if (entersound)
+				entersound.Play ();
+		}
+		if (inroom < inroomantes) {
+			if (exitsound)
+				exitsound.Play ();
+		}
+		inroomantes = inroom;
 		inroom = 0;
 	}
 		
 	public void setBounds (BoxCollider2D b) {
 		box = b;
-		Debug.Log ("bounds: " + box);
+	//	Debug.Log ("bounds: " + box);
 	}
 
 	public void updateMalo(Transform pos) {

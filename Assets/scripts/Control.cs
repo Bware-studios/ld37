@@ -4,6 +4,8 @@ using System.Collections;
 public class Control : MonoBehaviour {
 	Rigidbody2D body ;
 
+	float sqrt2i = 1.0f/Mathf.Sqrt (2.0f);
+
 	float last_fire_time = 0.0f;
 	public float fire_time_interval = 0.2f;
 
@@ -20,6 +22,7 @@ public class Control : MonoBehaviour {
 	bool flipped = false;
 
 	Animator anim;
+
 
 	// Use this for initialization
 	void Start () {
@@ -70,7 +73,8 @@ public class Control : MonoBehaviour {
 
 		bool fire = Input.GetButton ("Jump");
 
-		Vector2 v = new Vector2 (speed*dx,speed*dy);
+
+		Vector2 v = new Vector2 (speed*dx*(dy==0?1.0f:sqrt2i),speed*dy*(dx==0?1.0f:sqrt2i));
 		body.velocity = v;
 
 		if (fire && Time.time > last_fire_time + fire_time_interval) {
@@ -85,10 +89,12 @@ public class Control : MonoBehaviour {
 		//Debug.Log ("v ("+dx+","+dy+")");
 		if (bullet == null)
 			return;
+		//dy = 0;
 		if (dx == 0 && dy == 0)
 			dy = -1;
+		//	dx=1;
 		Vector2 mypos = transform.position;
-		Vector3 npos = new Vector3 (mypos.x + .5f*dx, mypos.y + .5f*dy +.5f, 0.0f);
+		Vector3 npos = new Vector3 (mypos.x + .7f*dx, mypos.y + .6f*dy +.25f, 0.0f);
 		GameObject nbullet = (GameObject)Instantiate (bullet, npos, Quaternion.identity, null);
 		nbullet.GetComponent<Bullet>().launch (dx,dy);
 	
