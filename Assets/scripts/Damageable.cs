@@ -59,7 +59,8 @@ public class Damageable : MonoBehaviour {
 
 	void waitAndExit(float seconds) {
 		//yield return new WaitForSeconds (seconds);
-		SceneManager.LoadScene ("perder");
+		//SceneManager.LoadScene ("perder");
+		Game.thegame.event_loss ();
 	}
 
 

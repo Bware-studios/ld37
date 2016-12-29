@@ -7,7 +7,7 @@ public class Depth : MonoBehaviour {
 	public int order;
 
 	public TiledMapComponent mapa;
-	int w,h;
+	public int w,h;
 
 	void Start() {
 		TiledMapComponent m = null;

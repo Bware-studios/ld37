@@ -23,7 +23,9 @@ public class Room : MonoBehaviour {
 			//Debug.Log ("todos");
 			//if (Game.thegame)
 			//	Game.thegame.win ();
-			SceneManager.LoadScene("ganar");
+
+			//SceneManager.LoadScene("ganar");
+			Game.thegame.event_win ();
 		}
 		marcador.text = "in: " + inroom + "/" + total;
 		if (inroom > inroomantes) {

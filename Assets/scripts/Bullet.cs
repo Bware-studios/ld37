@@ -10,14 +10,14 @@ public class Bullet : MonoBehaviour {
 
 	public float speed = 10.0f;
 
-	Rigidbody2D body;
+	//Rigidbody2D body;
 
 	// Use this for initialization
 	void Start () {
-		body = GetComponent<Rigidbody2D>();	
-		int iskin = Random.RandomRange (0, skins.Length);
+		//body = GetComponent<Rigidbody2D>();	
+		int iskin = Random.Range (0, skins.Length);
 		GetComponent<SpriteRenderer> ().sprite = skins [iskin];
-		GetComponent<Rigidbody2D> ().rotation = Random.RandomRange (0, 360);
+		GetComponent<Rigidbody2D> ().rotation = Random.Range (0, 360);
 	}
 
 
