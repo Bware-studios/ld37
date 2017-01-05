@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class Control : MonoBehaviour {
 	Rigidbody2D body ;
@@ -40,8 +41,8 @@ public class Control : MonoBehaviour {
 		if (!active)
 			return;
 		
-		float dx = Input.GetAxis ("Horizontal");
-		float dy = Input.GetAxis ("Vertical");
+		float dx = CrossPlatformInputManager.GetAxis ("Horizontal");
+		float dy = CrossPlatformInputManager.GetAxis ("Vertical");
 
 		bool up = false, down = false, right=false, left=false;
 		if (dx != 0) {
@@ -71,7 +72,7 @@ public class Control : MonoBehaviour {
 		}
 
 
-		bool fire = Input.GetButton ("Jump");
+		bool fire = CrossPlatformInputManager.GetButton ("Jump");
 
 
 		Vector2 v = new Vector2 (speed*dx*(dy==0?1.0f:sqrt2i),speed*dy*(dx==0?1.0f:sqrt2i));
