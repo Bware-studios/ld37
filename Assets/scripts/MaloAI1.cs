@@ -8,6 +8,7 @@ public class MaloAI1 : MonoBehaviour {
 	Animator anim;
 	TouchDamage damager;
 	SpriteRenderer ren;
+	Collider2D mycollider;
 
 	bool flipped = false;
 	public Room theroom;
@@ -25,6 +26,8 @@ public class MaloAI1 : MonoBehaviour {
 		anim = GetComponent<Animator> ();
 		damager = GetComponent<TouchDamage> ();
 		ren = GetComponent<SpriteRenderer> ();
+
+		mycollider = GetComponent<Collider2D> ();
 
 		theroom = GameObject.FindGameObjectWithTag ("room").GetComponent<Room>();
 		theroom.register ();
@@ -109,5 +112,30 @@ public class MaloAI1 : MonoBehaviour {
 		//}
 	}
 
+
+
+	float expectedUtilityOfMove(int depth, float dx, float dy) {
+		RaycastHit2D[] results = new RaycastHit2D[1];
+		int nhits = mycollider.Cast (new Vector2 (dx, dy), results);
+		if (nhits > 0)  // chocar con el player es bueno !!!
+			return -1.0f;
+		if (depth == 0) {
+			return 3.0; // develover estimacion utilidad distancia al player
+		}
+		// recursion
+
+		float util = -1.0f;
+		float auxutil;
+		auxutil = expectedUtilityOfMove (depth - 1, dx + 1.0f, dy);
+		util = (auxutil > util) ? auxutil : util;
+		auxutil = expectedUtilityOfMove (depth - 1, dx - 1.0f, dy);
+		util = (auxutil > util) ? auxutil : util;
+		auxutil = expectedUtilityOfMove (depth - 1, dx , dy + 1.0f);
+		util = (auxutil > util) ? auxutil : util;
+		auxutil = expectedUtilityOfMove (depth - 1, dx , dy - 1.0f);
+		util = (auxutil > util) ? auxutil : util;
+
+		return util;
+	}
 
 }
