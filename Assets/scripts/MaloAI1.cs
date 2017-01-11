@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+using X_UniTMX;
+
 public class MaloAI1 : MonoBehaviour {
 
 	Transform mypos = null;
@@ -9,6 +11,7 @@ public class MaloAI1 : MonoBehaviour {
 	TouchDamage damager;
 	SpriteRenderer ren;
 	Collider2D mycollider;
+	TileLayer main_map_layer = null;
 
 	bool flipped = false;
 	public Room theroom;
@@ -16,6 +19,9 @@ public class MaloAI1 : MonoBehaviour {
 	bool aturdido;
 	float fin_aturdido;
 
+	float next_decision = 0;
+
+	float ai_joystick_x,ai_joystick_y;
 
 	Transform targetpos;
 	public float speed = 3;
@@ -31,7 +37,27 @@ public class MaloAI1 : MonoBehaviour {
 
 		theroom = GameObject.FindGameObjectWithTag ("room").GetComponent<Room>();
 		theroom.register ();
+
+		GameObject mapGO = GameObject.FindGameObjectWithTag ("map");
+		TiledMapComponent mapcomp = mapGO.GetComponent<TiledMapComponent>();
+		Map themap = mapcomp.TiledMap;
+		foreach (Layer l in themap.Layers) {
+			if (l.Name == "main") {
+				main_map_layer = (TileLayer)l;
+				// main_map_layer.Tiles [2, 2]  es null  = vacio
+				// main_map_layer.Tiles [2, 2] .CurrentID   tileid
+			}
+		}
+
+		Debug.Log("p: "+transform.position + " themap: "+mapGO.transform.position+ " fromparent: "+transform.localPosition );
+		main_map_layer.SetTile (transform.localPosition.x, transform.localPosition.y,4);
 		aturdido = false;
+
+		ai_joystick_x = 0.0f;
+		ai_joystick_y = 0.0f;
+
+
+
 	}
 	
 	// Update is called once per frame
@@ -42,6 +68,32 @@ public class MaloAI1 : MonoBehaviour {
 			}
 		}
 		theroom.updateMalo (transform);
+
+		float tnow = Time.time;
+		if (tnow > next_decision) {
+			next_decision += 1.0f;
+
+			float util_left = expectedUtilityOfMove (3, -1, 0);
+			float util_right = expectedUtilityOfMove (3, +1, 0);
+			float util_up = expectedUtilityOfMove (3, 0, -1);
+			float util_down = expectedUtilityOfMove (3, 0, +1);
+
+			Debug.Log ("l "+util_left+" r "+util_right+" u "+util_up+" d "+util_down);
+			if (util_left >= util_right && util_left >= util_up && util_left >= util_down) {
+				ai_joystick_x = -1.0f;
+				ai_joystick_y = 0.0f;
+			} else if (util_right >= util_up && util_right >= util_down) {
+				ai_joystick_x = +1.0f;
+				ai_joystick_y = 0.0f;
+			} else if (util_up >= util_down) {
+				ai_joystick_x = 0.0f;
+				ai_joystick_y = +1.0f;
+			} else {
+				ai_joystick_x = 0.0f;
+				ai_joystick_y = -1.0f;
+			}
+
+		}
 	}
 
 	void FixedUpdate () {
@@ -59,8 +111,10 @@ public class MaloAI1 : MonoBehaviour {
 		if (targetpos == null)
 			return;
 
-		float dx = targetpos.position.x - mypos.position.x; 
-		float dy = targetpos.position.y - mypos.position.y; 
+//		float dx = targetpos.position.x - mypos.position.x; 
+//		float dy = targetpos.position.y - mypos.position.y; 
+		float dx = ai_joystick_x;
+		float dy = ai_joystick_y;
 		float ax = Mathf.Abs (dx);
 		float ay = Mathf.Abs (dy);
 
@@ -112,30 +166,68 @@ public class MaloAI1 : MonoBehaviour {
 		//}
 	}
 
-
-
-	float expectedUtilityOfMove(int depth, float dx, float dy) {
-		RaycastHit2D[] results = new RaycastHit2D[1];
-		int nhits = mycollider.Cast (new Vector2 (dx, dy), results);
-		if (nhits > 0)  // chocar con el player es bueno !!!
-			return -1.0f;
-		if (depth == 0) {
-			return 3.0; // develover estimacion utilidad distancia al player
+	bool freeToMove(int deltaix, int deltaiy) {
+		int ix = (int)Mathf.Floor (transform.localPosition.x + deltaix);
+		int iy = (int)Mathf.Floor (-transform.localPosition.y + deltaiy);
+		if (ix < 0 || iy < 0 || ix > 20 || iy > 15) {
+			Debug.Log ("ix= " + ix + " iy= " + iy);
 		}
-		// recursion
-
-		float util = -1.0f;
-		float auxutil;
-		auxutil = expectedUtilityOfMove (depth - 1, dx + 1.0f, dy);
-		util = (auxutil > util) ? auxutil : util;
-		auxutil = expectedUtilityOfMove (depth - 1, dx - 1.0f, dy);
-		util = (auxutil > util) ? auxutil : util;
-		auxutil = expectedUtilityOfMove (depth - 1, dx , dy + 1.0f);
-		util = (auxutil > util) ? auxutil : util;
-		auxutil = expectedUtilityOfMove (depth - 1, dx , dy - 1.0f);
-		util = (auxutil > util) ? auxutil : util;
-
-		return util;
+		Tile t = main_map_layer.Tiles [ix,iy];
+		return t == null;
 	}
 
+
+	float expectedUtilityOfMove(int depth, int dix, int diy) {
+		if (!freeToMove (dix, diy)) {
+			return -1.0f;
+		}
+		Vector2 p1 = targetpos.localPosition;
+		Vector2 p2 = mypos.localPosition;
+		float util_this = (p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.x - p2.x);
+		util_this = 1.0f / util_this;
+
+		if (depth == 0) {
+			return util_this;
+		}
+			
+		float auxutil;
+		util_this = -1.0f;
+		auxutil = expectedUtilityOfMove (depth - 1, dix + 1, diy);
+		util_this = (auxutil > util_this) ? auxutil : util_this;
+		auxutil = expectedUtilityOfMove (depth - 1, dix - 1, diy);
+		util_this = (auxutil > util_this) ? auxutil : util_this;
+		auxutil = expectedUtilityOfMove (depth - 1, dix , diy + 1);
+		util_this = (auxutil > util_this) ? auxutil : util_this;
+		auxutil = expectedUtilityOfMove (depth - 1, dix , diy - 1);
+		util_this = (auxutil > util_this) ? auxutil : util_this;
+
+		return util_this;
+	}
+	
+
+
+//	float expectedUtilityOfMove(int depth, float dx, float dy) {
+//		RaycastHit2D[] results = new RaycastHit2D[1];
+//		int nhits = mycollider.Cast (new Vector2 (dx, dy), results);
+//		if (nhits > 0)  // chocar con el player es bueno !!!
+//			return -1.0f;
+//		if (depth == 0) {
+//			return 3.0; // develover estimacion utilidad distancia al player
+//		}
+//		// recursion
+//
+//		float util = -1.0f;
+//		float auxutil;
+//		auxutil = expectedUtilityOfMove (depth - 1, dx + 1.0f, dy);
+//		util = (auxutil > util) ? auxutil : util;
+//		auxutil = expectedUtilityOfMove (depth - 1, dx - 1.0f, dy);
+//		util = (auxutil > util) ? auxutil : util;
+//		auxutil = expectedUtilityOfMove (depth - 1, dx , dy + 1.0f);
+//		util = (auxutil > util) ? auxutil : util;
+//		auxutil = expectedUtilityOfMove (depth - 1, dx , dy - 1.0f);
+//		util = (auxutil > util) ? auxutil : util;
+//
+//		return util;
+//	}
+//
 }
