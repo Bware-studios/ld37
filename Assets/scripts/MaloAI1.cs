@@ -13,6 +13,9 @@ public class MaloAI1 : MonoBehaviour {
 	Collider2D mycollider;
 	TileLayer main_map_layer = null;
 
+	public string debugstr = "";
+
+
 	bool flipped = false;
 	public Room theroom;
 
@@ -49,7 +52,7 @@ public class MaloAI1 : MonoBehaviour {
 			}
 		}
 
-		Debug.Log("p: "+transform.position + " themap: "+mapGO.transform.position+ " fromparent: "+transform.localPosition );
+		//Debug.Log("p: "+transform.position + " themap: "+mapGO.transform.position+ " fromparent: "+transform.localPosition );
 		main_map_layer.SetTile (transform.localPosition.x, transform.localPosition.y,4);
 		aturdido = false;
 
@@ -69,16 +72,20 @@ public class MaloAI1 : MonoBehaviour {
 		}
 		theroom.updateMalo (transform);
 
+		int search_depth = 5;
+		float decision_dt = 0.2f;
+
 		float tnow = Time.time;
 		if (tnow > next_decision) {
-			next_decision += 1.0f;
+			next_decision += decision_dt;
 
-			float util_left = expectedUtilityOfMove (3, -1, 0);
-			float util_right = expectedUtilityOfMove (3, +1, 0);
-			float util_up = expectedUtilityOfMove (3, 0, -1);
-			float util_down = expectedUtilityOfMove (3, 0, +1);
 
-			Debug.Log ("l "+util_left+" r "+util_right+" u "+util_up+" d "+util_down);
+			float util_left = expectedUtilityOfMove (search_depth,0.0f, -.5f, 0);
+			float util_right = expectedUtilityOfMove (search_depth,0.0f, +.5f, 0);
+			float util_up = expectedUtilityOfMove (search_depth,0.0f, 0, -.5f);
+			float util_down = expectedUtilityOfMove (search_depth,0.0f, 0, +.5f);
+
+			//Debug.Log ("l "+util_left+" r "+util_right+" u "+util_up+" d "+util_down);
 			if (util_left >= util_right && util_left >= util_up && util_left >= util_down) {
 				ai_joystick_x = -1.0f;
 				ai_joystick_y = 0.0f;
@@ -93,6 +100,7 @@ public class MaloAI1 : MonoBehaviour {
 				ai_joystick_y = -1.0f;
 			}
 
+			debugstr="["+util_left+","+util_right+","+util_up+","+util_down+"]";
 		}
 	}
 
@@ -166,44 +174,44 @@ public class MaloAI1 : MonoBehaviour {
 		//}
 	}
 
-	bool freeToMove(int deltaix, int deltaiy) {
+	bool freeToMove(float deltaix, float deltaiy) {
 		int ix = (int)Mathf.Floor (transform.localPosition.x + deltaix);
 		int iy = (int)Mathf.Floor (-transform.localPosition.y + deltaiy);
-		if (ix < 0 || iy < 0 || ix > 20 || iy > 15) {
-			Debug.Log ("ix= " + ix + " iy= " + iy);
-		}
+//		if (ix < 0 || iy < 0 || ix > 20 || iy > 15) {
+//			Debug.Log ("ix= " + ix + " iy= " + iy);
+//		}
 		Tile t = main_map_layer.Tiles [ix,iy];
 		return t == null;
 	}
 
 
-	float expectedUtilityOfMove(int depth, int dix, int diy) {
+	float expectedUtilityOfMove(int depth, float cost, float dix, float diy) {
 		if (!freeToMove (dix, diy)) {
 			return -1.0f;
 		}
 		Vector2 p1 = targetpos.localPosition;
 		Vector2 p2 = mypos.localPosition;
-		float util_this = (p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.x - p2.x);
-		util_this = 1.0f / util_this;
 
+		float util_this = Mathf.Sqrt((p2.x + dix - p1.x) * (p2.x + dix - p1.x) + (p2.y - diy - p1.y) * (p2.y - diy - p1.y));
+		util_this = 1.0f / util_this;
 		if (depth == 0) {
-			return util_this;
+			return util_this-cost;
 		}
 			
 		float auxutil;
-		util_this = -1.0f;
-		auxutil = expectedUtilityOfMove (depth - 1, dix + 1, diy);
+		//float util_this = -1.0f;
+		auxutil = expectedUtilityOfMove (depth - 1,cost+.1f, dix + .5f, diy);
 		util_this = (auxutil > util_this) ? auxutil : util_this;
-		auxutil = expectedUtilityOfMove (depth - 1, dix - 1, diy);
+		auxutil = expectedUtilityOfMove (depth - 1,cost+.1f, dix - .5f, diy);
 		util_this = (auxutil > util_this) ? auxutil : util_this;
-		auxutil = expectedUtilityOfMove (depth - 1, dix , diy + 1);
+		auxutil = expectedUtilityOfMove (depth - 1,cost+.1f, dix , diy + .5f);
 		util_this = (auxutil > util_this) ? auxutil : util_this;
-		auxutil = expectedUtilityOfMove (depth - 1, dix , diy - 1);
+		auxutil = expectedUtilityOfMove (depth - 1,cost+.1f, dix , diy - .5f);
 		util_this = (auxutil > util_this) ? auxutil : util_this;
 
-		return util_this;
+		return util_this-cost;
 	}
-	
+
 
 
 //	float expectedUtilityOfMove(int depth, float dx, float dy) {
